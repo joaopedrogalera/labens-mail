@@ -57,5 +57,3 @@ def checkDB(DBPath):
     conn.close()
 
     return files
-
-print(checkDB('db.db'))
