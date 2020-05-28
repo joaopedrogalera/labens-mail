@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import smtplib
@@ -57,3 +58,29 @@ def checkDB(DBPath):
     conn.close()
 
     return files
+
+def getMailAddresses():
+    mailAddresses = []
+
+    #Provisoriamente, os emais são salvos no arquivo mail.txt
+    with open('mails.txt','r') as mailsFile:
+        for mail in mailsFile:
+            if not mail == '' and not mail == '\n':
+                mailAddresses.append(mail.split('\n')[0])
+
+    return mailAddresses
+
+def main():
+    files = checkDB('database.db')
+
+    if not files == []:
+        mailAddresses = getMailAddresses()
+
+        if not mailAddresses == []:
+
+            msgHtml = renderHTML('email-prob-com.html',{'tabelas':files})
+
+            sendMailHTML('servidor.de.email',465,'email@de.origem','senha',mailAddresses,'Assunto',msgHtml)
+
+if __name__ == '__main__':
+    main()
