@@ -48,10 +48,10 @@ def checkDB(DBPath):
 
         no_update_time = (time - measure_time).seconds + result[1]
 
-        if file[3] == 0 and no_update_time >= 3600:
+        if file[3] == 0 and no_update_time >= 10800:
             curSt.execute("UPDATE files SET status = -1 WHERE id = :file",{'file':file[0]})
             files.append(file[1]+'-'+file[2])
-        elif file[3] == -1 and no_update_time < 3600:
+        elif file[3] == -1 and no_update_time < 10800:
             curSt.execute("UPDATE files SET status = 0 WHERE id = :file",{'file':file[0]})
 
     conn.commit()
