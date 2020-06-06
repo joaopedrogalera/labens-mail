@@ -46,7 +46,7 @@ def checkDB(DBPath):
         time = datetime.datetime.utcnow()
         measure_time = datetime.datetime.strptime(result[0],'%Y-%m-%dT%H:%M:%S')
 
-        no_update_time = (time - measure_time).seconds + result[1]
+        no_update_time = int((time-measure_time).total_seconds() + result[1])
 
         if (file[3] == 0 or file[3] == -2) and no_update_time >= 10800:
             curSt.execute("UPDATE files SET status = -2 WHERE id = :file",{'file':file[0]})
