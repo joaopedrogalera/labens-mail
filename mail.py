@@ -73,9 +73,9 @@ def checkUpdateTime(files,conn):
 
         no_update_time = int((time-measure_time).total_seconds() + result[1])
 
-        if (file[3] == 0 or file[3] == -2) and no_update_time >= 10800:
+        if (file[3] == 0 or file[3] == -2) and no_update_time >= 3600:
             tables.append(file)
-        elif (file[3] == -1 or file[3] == -2) and no_update_time < 10800:
+        elif (file[3] == -1 or file[3] == -2) and no_update_time < 3600:
             cur.execute("UPDATE files SET status = 0 WHERE id = :file",{'file':file[0]})
 
     conn.commit()
