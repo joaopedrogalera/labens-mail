@@ -48,7 +48,7 @@ def main():
 
             msgHtml = renderHTML('email-prob-com.html',{'tabelas':files})
 
-            sendMailHTML(settings.mailServer['serverAddress'],settings.mailServer['serverPort'],settings.mailServer['user'],settings.mailServer['passwd'],mailAddresses,'Monitoramento EPESOl',msgHtml)
+            sendMailHTML(settings.mailServer['serverAddress'],settings.mailServer['serverPort'],settings.mailServer['user'],settings.mailServer['passwd'],mailAddresses,'Monitoramento EPESOLs',msgHtml)
 
 if __name__ == '__main__':
     main()
