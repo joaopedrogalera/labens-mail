@@ -1,10 +1,7 @@
-#!/usr/bin/python3
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import smtplib
 import jinja2
-import envios
-import settings
 
 def sendMailHTML(server,port,user,password,to,subject,html):
     msg = MIMEMultipart()
@@ -37,18 +34,3 @@ def getMailAddresses():
                 mailAddresses.append(mail.split('\n')[0])
 
     return mailAddresses
-
-def main():
-    files = envios.checkDB2(settings.DBPath+'/database.db')
-
-    if not files == []:
-        mailAddresses = getMailAddresses()
-
-        if not mailAddresses == []:
-
-            msgHtml = renderHTML('email-prob-com.html',{'tabelas':files})
-
-            sendMailHTML(settings.mailServer['serverAddress'],settings.mailServer['serverPort'],settings.mailServer['user'],settings.mailServer['passwd'],mailAddresses,'Monitoramento EPESOLs',msgHtml)
-
-if __name__ == '__main__':
-    main()
