@@ -1,4 +1,4 @@
-#Localização dos arquivos
+#Localização do banco de atualizações
 DBPath = "."
 
 #Configuração do servidor de e-mail
@@ -8,3 +8,11 @@ mailServer = {
             'user':'',
             'passwd':''
             }
+
+#Configuração BD de e-mails
+mailList = {
+            'serverAddress':'',
+            'user':'',
+            'passwd':'',
+            'db':''
+        }

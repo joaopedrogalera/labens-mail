@@ -2,6 +2,8 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import smtplib
 import jinja2
+import psycopg2
+import settings
 
 def sendMailHTML(server,port,user,password,to,subject,html):
     msg = MIMEMultipart()
@@ -25,12 +27,13 @@ def renderHTML(fileName,content):
     return output
 
 def getMailAddresses():
-    mailAddresses = []
 
-    #Provisoriamente, os emais são salvos no arquivo mail.txt
-    with open('mails.txt','r') as mailsFile:
-        for mail in mailsFile:
-            if not mail == '' and not mail == '\n':
-                mailAddresses.append(mail.split('\n')[0])
+    conn = psycopg2.connect(host=settings.mailList['serverAddress'],user=settings.mailList['user'],password=settings.mailList['passwd'],database=settings.mailList['db'])
+    cur = conn.cursor()
+    cur.execute("SELECT usuarios.email FROM usuarios, roles WHERE usuarios.id_grupo = roles.id AND roles.name IN ('admin','manager') AND usuarios.ativo = 't' AND usuarios.email IS NOT NULL AND usuarios.nome != 'admin' GROUP BY usuarios.email;")
+    result = cur.fetchall()
+
+    mailAddresses = [m[0] for m in result]
+    conn.close()
 
     return mailAddresses
