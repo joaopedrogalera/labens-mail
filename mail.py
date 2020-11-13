@@ -30,7 +30,7 @@ def getMailAddresses():
 
     conn = psycopg2.connect(host=settings.mailList['serverAddress'],user=settings.mailList['user'],password=settings.mailList['passwd'],database=settings.mailList['db'])
     cur = conn.cursor()
-    cur.execute("SELECT usuarios.email FROM usuarios, roles WHERE usuarios.id_grupo = roles.id AND roles.name IN ('admin','manager') AND usuarios.ativo = 't' AND usuarios.email IS NOT NULL AND usuarios.nome != 'admin' GROUP BY usuarios.email;")
+    cur.execute("SELECT usuarios.email FROM usuarios, roles WHERE usuarios.id_grupo = roles.id AND roles.name = 'admin' AND usuarios.ativo = 't' AND usuarios.email IS NOT NULL AND usuarios.nome != 'admin' GROUP BY usuarios.email;")
     result = cur.fetchall()
 
     mailAddresses = [m[0] for m in result]
